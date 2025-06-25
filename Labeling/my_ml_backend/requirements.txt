@@ -1,11 +1,13 @@
 # Example dependency for SAM (Segment Anything Model)
-# segment-anything @ git+https://github.com/facebookresearch/segment-anything.git
-# torch
-# numpy
-# opencv-python
+segment-anything @ git+https://github.com/facebookresearch/segment-anything.git@dca509f
+# Uncomment and specify the correct path for the SAM checkpoint in your environment or Dockerfile
 
 # Example dependency for Grounding DINO (uncomment and adjust as needed)
 # git+https://github.com/IDEA-Research/GroundingDINO.git
 # torch
 # numpy
 # opencv-python
+opencv-python
+pycocotools
+matplotlib
+scikit-image

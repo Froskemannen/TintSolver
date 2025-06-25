@@ -2,23 +2,29 @@ from typing import List, Dict, Optional
 from label_studio_ml.model import LabelStudioMLBase
 from label_studio_ml.response import ModelResponse
 
-# TODO: Import your foundation model here (e.g., SAM, Grounding DINO)
-# Example:
-# from segment_anything import SamPredictor, sam_model_registry
-# import torch
+# Import SAM (Segment Anything Model) dependencies
+from segment_anything import SamPredictor, sam_model_registry, SamAutomaticMaskGenerator
+import torch
+import numpy as np
+from PIL import Image
+import os
+from skimage import measure
 
 class NewModel(LabelStudioMLBase):
-    """Custom ML Backend model with foundation model integration (SAM or Grounding DINO)
-    """
+    """Custom ML Backend model with foundation model integration (SAM)"""
     def setup(self):
-        """Configure any parameters of your model here, including loading the foundation model"""
-        self.set("model_version", "0.0.1")
-        # TODO: Load your foundation model here
-        # Example:
-        # self.sam = sam_model_registry["vit_h"](checkpoint="/path/to/sam_vit_h.pth")
-        # self.predictor = SamPredictor(self.sam)
-        # self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-        # self.sam.to(self.device)
+        self.set("model_version", "0.1.0-sam")
+        sam_checkpoint = os.environ.get("SAM_CHECKPOINT", "/path/to/sam_vit_h.pth")
+        sam_type = os.environ.get("SAM_TYPE", "vit_h")
+        if not os.path.isfile(sam_checkpoint):
+            raise FileNotFoundError(
+                f"SAM checkpoint not found at '{sam_checkpoint}'. "
+                "Please set the SAM_CHECKPOINT environment variable to the correct path of your .pth file. "
+                "See README.md for details."
+            )
+        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        self.sam = sam_model_registry[sam_type](checkpoint=sam_checkpoint)
+        self.sam.to(self.device)
 
     def predict(self, tasks: List[Dict], context: Optional[Dict] = None, **kwargs) -> ModelResponse:
         """
@@ -27,33 +33,45 @@ class NewModel(LabelStudioMLBase):
         :param context: [Label Studio context in JSON format](https://labelstud.io/guide/ml_create#Implement-prediction-logic)
         :return: ModelResponse(predictions=predictions) with predictions in Label Studio format
         """
-        print(f"""
-        Run prediction on {tasks}
-        Received context: {context}
-        Project ID: {self.project_id}
-        Label config: {self.label_config}
-        Parsed JSON Label config: {self.parsed_label_config}
-        Extra params: {self.extra_params}""")
-
         predictions = []
+        mask_generator = SamAutomaticMaskGenerator(self.sam)
         for task in tasks:
-            # TODO: Extract image path or data from task
-            # Example:
-            # image_path = task['data']['image']
-            # prompt = ... # Extract prompt from task/context if needed
-
-            # TODO: Run foundation model inference
-            # Example:
-            # mask = self.predictor.predict(image_path, prompt)
-
-            # TODO: Convert mask to Label Studio result format
-            # result = ...
-            # predictions.append({
-            #     "model_version": self.get("model_version"),
-            #     "result": [result]
-            # })
-            pass
-
+            try:
+                # Extract image path from task
+                image_path = task['data']['image']
+                image = np.array(Image.open(image_path).convert("RGB"))
+                masks = mask_generator.generate(image)
+                results = []
+                for mask_data in masks:
+                    mask = mask_data["segmentation"]
+                    contours = measure.find_contours(mask, 0.5)
+                    polygons = []
+                    for contour in contours:
+                        # Convert (row, col) to (x, y) pairs for Label Studio
+                        polygon = [float(coord) for row, col in contour for coord in (col, row)]
+                        if len(polygon) >= 6:  # At least 3 points
+                            polygons.append(polygon)
+                    if not polygons:
+                        continue
+                    results.append({
+                        "from_name": "label",
+                        "to_name": "image",
+                        "type": "polygon",
+                        "value": {
+                            "points": [list(np.array(p).reshape(-1, 2).tolist()) for p in polygons],
+                            "polygonlabels": ["object"]
+                        }
+                    })
+                predictions.append({
+                    "model_version": self.get("model_version"),
+                    "result": results
+                })
+            except (IOError, OSError) as e:
+                print(f"File error in prediction: {e}")
+                continue
+            except Exception as e:
+                print(f"Unexpected error in prediction: {e}")
+                raise
         return ModelResponse(predictions=predictions)
 
     def fit(self, event, data, **kwargs):

@@ -1,0 +1,18 @@
+# Global ignores for macOS, Python, and common environments
+.DS_Store
+*.pyc
+__pycache__/
+*.log
+*.swp
+*.swo
+*.tmp
+*.bak
+*.egg-info/
+.env
+env/
+venv/
+.venv/
+node_modules/
+.idea/
+.vscode/
+issue-*-*.md

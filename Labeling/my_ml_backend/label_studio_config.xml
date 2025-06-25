@@ -1,0 +1,162 @@
+<View>
+  <Header value="Select type, then annotate the region." />
+
+  <!-- Always visible main type selection -->
+  <Choices name="main_type" toName="image" choice="single" showInline="true">
+    <Choice value="Droplet"/>
+    <Choice value="Stroke"/>
+    <Choice value="Target"/>
+    <Choice value="Switch Gate"/>
+    <Choice value="Negation Gate"/>
+  </Choices>
+
+  <!-- Droplet -->
+  <View visibleWhen="choice-selected" whenTagName="main_type" whenChoiceValue="Droplet">
+    <BrushLabels name="droplet_brush" toName="image" choice="single">
+      <Label value="Red Droplet"/><Label value="Blue Droplet"/>
+      <Label value="Yellow Droplet"/><Label value="Green Droplet"/>
+      <Label value="Orange Droplet"/><Label value="Purple Droplet"/>
+      <Label value="White Droplet"/>
+    </BrushLabels>
+  </View>
+
+  <!-- Stroke -->
+  <View visibleWhen="choice-selected" whenTagName="main_type" whenChoiceValue="Stroke">
+    <BrushLabels name="stroke_brush" toName="image" choice="single">
+      <Label value="Red Stroke"/><Label value="Blue Stroke"/>
+      <Label value="Yellow Stroke"/><Label value="Green Stroke"/>
+      <Label value="Orange Stroke"/><Label value="Purple Stroke"/>
+      <Label value="White Stroke"/><Label value="Grey Stroke"/>
+    </BrushLabels>
+  </View>
+
+  <!-- Target -->
+  <View visibleWhen="choice-selected" whenTagName="main_type" whenChoiceValue="Target">
+    <!-- Select target type -->
+    <Choices name="target_type" toName="image" choice="single" showInline="true">
+      <Choice value="Butterfly"/>
+      <Choice value="Frog"/>
+      <Choice value="Flower Petal"/>
+    </Choices>
+    <!-- Butterfly -->
+    <View visibleWhen="choice-selected" whenTagName="target_type" whenChoiceValue="Butterfly">
+      <BrushLabels name="target_butterfly_brush" toName="image" choice="single">
+        <Label value="Butterfly - Red"/><Label value="Butterfly - Blue"/>
+        <Label value="Butterfly - Yellow"/><Label value="Butterfly - Green"/>
+        <Label value="Butterfly - Orange"/><Label value="Butterfly - Purple"/>
+        <Label value="Butterfly - White"/>
+      </BrushLabels>
+    </View>
+    <!-- Frog -->
+    <View visibleWhen="choice-selected" whenTagName="target_type" whenChoiceValue="Frog">
+      <BrushLabels name="target_frog_brush" toName="image" choice="single">
+        <Label value="Frog - Red"/><Label value="Frog - Blue"/>
+        <Label value="Frog - Yellow"/><Label value="Frog - Green"/>
+        <Label value="Frog - Orange"/><Label value="Frog - Purple"/>
+        <Label value="Frog - White"/>
+      </BrushLabels>
+    </View>
+    <!-- Flower Petal -->
+    <View visibleWhen="choice-selected" whenTagName="target_type" whenChoiceValue="Flower Petal">
+      <BrushLabels name="target_flower_brush" toName="image" choice="single">
+        <Label value="Flower Petal - Red"/><Label value="Flower Petal - Blue"/>
+        <Label value="Flower Petal - Yellow"/><Label value="Flower Petal - Green"/>
+        <Label value="Flower Petal - Orange"/><Label value="Flower Petal - Purple"/>
+        <Label value="Flower Petal - White"/>
+      </BrushLabels>
+    </View>
+  </View>
+
+  <!-- Negation Gate -->
+  <View visibleWhen="choice-selected" whenTagName="main_type" whenChoiceValue="Negation Gate">
+    <BrushLabels name="negation_gate_brush" toName="image" choice="single">
+      <Label value="Red Negation Gate"/><Label value="Blue Negation Gate"/>
+      <Label value="Yellow Negation Gate"/><Label value="Green Negation Gate"/>
+      <Label value="Orange Negation Gate"/><Label value="Purple Negation Gate"/>
+    </BrushLabels>
+  </View>
+
+  <!-- Switch Gate -->
+  <View visibleWhen="choice-selected" whenTagName="main_type" whenChoiceValue="Switch Gate">
+    <Choices name="switch_gate_type" toName="image" choice="single" showInline="true">
+      <Choice value="2-way Switch Gate"/>
+      <Choice value="3-way Switch Gate"/>
+      <Choice value="4-way Switch Gate"/>
+    </Choices>
+    <!-- 2-way -->
+    <View visibleWhen="choice-selected" whenTagName="switch_gate_type" whenChoiceValue="2-way Switch Gate">
+      <Choices name="color_1_2way" toName="image" choice="single" showInline="true">
+        <Choice value="Red"/><Choice value="Blue"/><Choice value="Yellow"/>
+        <Choice value="Green"/><Choice value="Orange"/><Choice value="Purple"/><Choice value="White"/>
+      </Choices>
+      <Choices name="color_2_2way" toName="image" choice="single" showInline="true">
+        <Choice value="Red"/><Choice value="Blue"/><Choice value="Yellow"/>
+        <Choice value="Green"/><Choice value="Orange"/><Choice value="Purple"/><Choice value="White"/>
+      </Choices>
+      <View visibleWhen="choice-selected" whenTagName="color_1_2way">
+        <View visibleWhen="choice-selected" whenTagName="color_2_2way">
+          <BrushLabels name="switch_gate_2way_brush" toName="image" choice="single">
+            <Label value="Switch Gate Region"/>
+          </BrushLabels>
+        </View>
+      </View>
+    </View>
+    <!-- 3-way -->
+    <View visibleWhen="choice-selected" whenTagName="switch_gate_type" whenChoiceValue="3-way Switch Gate">
+      <Choices name="color_1_3way" toName="image" choice="single" showInline="true">
+        <Choice value="Red"/><Choice value="Blue"/><Choice value="Yellow"/>
+        <Choice value="Green"/><Choice value="Orange"/><Choice value="Purple"/><Choice value="White"/>
+      </Choices>
+      <Choices name="color_2_3way" toName="image" choice="single" showInline="true">
+        <Choice value="Red"/><Choice value="Blue"/><Choice value="Yellow"/>
+        <Choice value="Green"/><Choice value="Orange"/><Choice value="Purple"/><Choice value="White"/>
+      </Choices>
+      <Choices name="color_3_3way" toName="image" choice="single" showInline="true">
+        <Choice value="Red"/><Choice value="Blue"/><Choice value="Yellow"/>
+        <Choice value="Green"/><Choice value="Orange"/><Choice value="Purple"/><Choice value="White"/>
+      </Choices>
+      <View visibleWhen="choice-selected" whenTagName="color_1_3way">
+        <View visibleWhen="choice-selected" whenTagName="color_2_3way">
+          <View visibleWhen="choice-selected" whenTagName="color_3_3way">
+            <BrushLabels name="switch_gate_3way_brush" toName="image" choice="single">
+              <Label value="Switch Gate Region"/>
+            </BrushLabels>
+          </View>
+        </View>
+      </View>
+    </View>
+    <!-- 4-way -->
+    <View visibleWhen="choice-selected" whenTagName="switch_gate_type" whenChoiceValue="4-way Switch Gate">
+      <Choices name="color_1_4way" toName="image" choice="single" showInline="true">
+        <Choice value="Red"/><Choice value="Blue"/><Choice value="Yellow"/>
+        <Choice value="Green"/><Choice value="Orange"/><Choice value="Purple"/><Choice value="White"/>
+      </Choices>
+      <Choices name="color_2_4way" toName="image" choice="single" showInline="true">
+        <Choice value="Red"/><Choice value="Blue"/><Choice value="Yellow"/>
+        <Choice value="Green"/><Choice value="Orange"/><Choice value="Purple"/><Choice value="White"/>
+      </Choices>
+      <Choices name="color_3_4way" toName="image" choice="single" showInline="true">
+        <Choice value="Red"/><Choice value="Blue"/><Choice value="Yellow"/>
+        <Choice value="Green"/><Choice value="Orange"/><Choice value="Purple"/><Choice value="White"/>
+      </Choices>
+      <Choices name="color_4_4way" toName="image" choice="single" showInline="true">
+        <Choice value="Red"/><Choice value="Blue"/><Choice value="Yellow"/>
+        <Choice value="Green"/><Choice value="Orange"/><Choice value="Purple"/><Choice value="White"/>
+      </Choices>
+      <View visibleWhen="choice-selected" whenTagName="color_1_4way">
+        <View visibleWhen="choice-selected" whenTagName="color_2_4way">
+          <View visibleWhen="choice-selected" whenTagName="color_3_4way">
+            <View visibleWhen="choice-selected" whenTagName="color_4_4way">
+              <BrushLabels name="switch_gate_4way_brush" toName="image" choice="single">
+                <Label value="Switch Gate Region"/>
+              </BrushLabels>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+  </View>
+
+  <!-- Show image -->
+  <Image name="image" value="$image"/>
+</View>

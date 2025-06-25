@@ -1,22 +1,21 @@
-This guide describes the simplest way to start using ML backend with Label Studio.
+# This guide describes the simplest way to start using ML backend with Label Studio
 
 ## Running with Docker (Recommended)
 
 1. Start Machine Learning backend on `http://localhost:9090` with prebuilt image:
 
-```bash
-docker-compose up
-```
+    ```bash
+    docker-compose up
+    ```
 
 2. Validate that backend is running
 
-```bash
-$ curl http://localhost:9090/
-{"status":"UP"}
-```
+    ```bash
+    $ curl http://localhost:9090/
+    {"status":"UP"}
+    ```
 
 3. Connect to the backend from Label Studio running on the same host: go to your project `Settings -> Machine Learning -> Add Model` and specify `http://localhost:9090` as a URL.
-
 
 ## Building from source (Advanced)
 
@@ -42,17 +41,45 @@ Then you can start the ML backend:
 label-studio-ml start ./dir_with_your_model
 ```
 
-# Configuration
+## Configuration
+
 Parameters can be set in `docker-compose.yml` before running the container.
 
-
 The following common parameters are available:
+
 - `BASIC_AUTH_USER` - specify the basic auth user for the model server
 - `BASIC_AUTH_PASS` - specify the basic auth password for the model server
 - `LOG_LEVEL` - set the log level for the model server
 - `WORKERS` - specify the number of workers for the model server
 - `THREADS` - specify the number of threads for the model server
 
-# Customization
+## Customization
 
-The ML backend can be customized by adding your own models and logic inside the `./dir_with_your_model` directory. 
+The ML backend can be customized by adding your own models and logic inside the `./dir_with_your_model` directory.
+
+## SAM Model Integration Notes
+
+- This backend uses the Segment Anything Model (SAM) for image segmentation.
+- You must provide a valid SAM checkpoint file (e.g., `sam_vit_h.pth`).
+- Set the environment variable `SAM_CHECKPOINT` to the path of your checkpoint, or edit `model.py` to hardcode the path.
+- The default model type is `vit_h` (can be changed with `SAM_TYPE` env variable).
+
+### Example: Running with a Local Checkpoint
+
+```bash
+export SAM_CHECKPOINT=/absolute/path/to/sam_vit_h.pth
+export SAM_TYPE=vit_h  # or vit_l, vit_b, etc.
+python model.py  # or use the backend's run command
+```
+
+## Testing
+
+To run the API tests:
+
+```bash
+pip install -r requirements-test.txt
+pytest
+```
+
+- Edit `test_api.py` to provide a valid local image path in the test task for meaningful results.
+- The backend does not support remote image URLs by default.

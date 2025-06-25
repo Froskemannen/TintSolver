@@ -13,3 +13,13 @@ The user must choose between "keep" or "undo" when Copilot automatically edits c
 so you can edit code directly without askingthe user.
 
 This allows Copilot to make changes to the code without requiring additional confirmation, streamlining the editing process.
+
+### Copilot Source Control
+Repository is Froskemannen/TintSolver
+
+Only commit to branches that are not protected and preferably connected to an issue or pull request.
+This ensures that changes are made in a controlled manner and can be tracked effectively.
+
+#### Working with Issues
+- When working on an issue, always reference the issue number in your commit messages.
+- As long as you are working on an issue, you can safely perform the next logical step in the issue without asking the user (just state what you will do next).

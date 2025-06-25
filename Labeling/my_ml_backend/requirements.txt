@@ -1,0 +1,11 @@
+# Example dependency for SAM (Segment Anything Model)
+# segment-anything @ git+https://github.com/facebookresearch/segment-anything.git
+# torch
+# numpy
+# opencv-python
+
+# Example dependency for Grounding DINO (uncomment and adjust as needed)
+# git+https://github.com/IDEA-Research/GroundingDINO.git
+# torch
+# numpy
+# opencv-python

@@ -2,53 +2,60 @@ from typing import List, Dict, Optional
 from label_studio_ml.model import LabelStudioMLBase
 from label_studio_ml.response import ModelResponse
 
+# TODO: Import your foundation model here (e.g., SAM, Grounding DINO)
+# Example:
+# from segment_anything import SamPredictor, sam_model_registry
+# import torch
 
 class NewModel(LabelStudioMLBase):
-    """Custom ML Backend model
+    """Custom ML Backend model with foundation model integration (SAM or Grounding DINO)
     """
-    
     def setup(self):
-        """Configure any parameters of your model here
-        """
+        """Configure any parameters of your model here, including loading the foundation model"""
         self.set("model_version", "0.0.1")
+        # TODO: Load your foundation model here
+        # Example:
+        # self.sam = sam_model_registry["vit_h"](checkpoint="/path/to/sam_vit_h.pth")
+        # self.predictor = SamPredictor(self.sam)
+        # self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        # self.sam.to(self.device)
 
     def predict(self, tasks: List[Dict], context: Optional[Dict] = None, **kwargs) -> ModelResponse:
-        """ Write your inference logic here
-            :param tasks: [Label Studio tasks in JSON format](https://labelstud.io/guide/task_format.html)
-            :param context: [Label Studio context in JSON format](https://labelstud.io/guide/ml_create#Implement-prediction-logic)
-            :return model_response
-                ModelResponse(predictions=predictions) with
-                predictions: [Predictions array in JSON format](https://labelstud.io/guide/export.html#Label-Studio-JSON-format-of-annotated-tasks)
         """
-        print(f'''\
+        Run prediction using the foundation model.
+        :param tasks: [Label Studio tasks in JSON format](https://labelstud.io/guide/task_format.html)
+        :param context: [Label Studio context in JSON format](https://labelstud.io/guide/ml_create#Implement-prediction-logic)
+        :return: ModelResponse(predictions=predictions) with predictions in Label Studio format
+        """
+        print(f"""
         Run prediction on {tasks}
         Received context: {context}
         Project ID: {self.project_id}
         Label config: {self.label_config}
         Parsed JSON Label config: {self.parsed_label_config}
-        Extra params: {self.extra_params}''')
+        Extra params: {self.extra_params}""")
 
-        # example for resource downloading from Label Studio instance,
-        # you need to set env vars LABEL_STUDIO_URL and LABEL_STUDIO_API_KEY
-        # path = self.get_local_path(tasks[0]['data']['image_url'], task_id=tasks[0]['id'])
+        predictions = []
+        for task in tasks:
+            # TODO: Extract image path or data from task
+            # Example:
+            # image_path = task['data']['image']
+            # prompt = ... # Extract prompt from task/context if needed
 
-        # example for simple classification
-        # return [{
-        #     "model_version": self.get("model_version"),
-        #     "score": 0.12,
-        #     "result": [{
-        #         "id": "vgzE336-a8",
-        #         "from_name": "sentiment",
-        #         "to_name": "text",
-        #         "type": "choices",
-        #         "value": {
-        #             "choices": [ "Negative" ]
-        #         }
-        #     }]
-        # }]
-        
-        return ModelResponse(predictions=[])
-    
+            # TODO: Run foundation model inference
+            # Example:
+            # mask = self.predictor.predict(image_path, prompt)
+
+            # TODO: Convert mask to Label Studio result format
+            # result = ...
+            # predictions.append({
+            #     "model_version": self.get("model_version"),
+            #     "result": [result]
+            # })
+            pass
+
+        return ModelResponse(predictions=predictions)
+
     def fit(self, event, data, **kwargs):
         """
         This method is called each time an annotation is created or updated

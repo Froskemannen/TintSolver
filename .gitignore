@@ -16,3 +16,4 @@ node_modules/
 .idea/
 .vscode/
 issue-*-*.md
+Labeling/my_ml_backend/models/sam_vit_h_4b8939.pth

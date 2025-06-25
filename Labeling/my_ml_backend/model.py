@@ -10,6 +10,13 @@ from PIL import Image
 import os
 from skimage import measure
 
+# TODO: Ensure that the predict method returns results with 'from_name' matching the active BrushLabels name
+# (e.g., 'target_butterfly', 'target_frog', or 'target_flower') and 'to_name' set to 'image',
+# and outputs a mask in the format required by BrushLabels (base64-encoded PNG or RLE),
+# to be compatible with the current Label Studio XML config (now using BrushLabels/masks, not polygons).
+# See Labeling/my_ml_backend/label_studio_config.xml for the current labeling configuration.
+# Reference: Issue #3 (foundation model integration, mask output)
+
 class NewModel(LabelStudioMLBase):
     """Custom ML Backend model with foundation model integration (SAM)"""
     def setup(self):

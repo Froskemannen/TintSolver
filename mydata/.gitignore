@@ -1,0 +1,9 @@
+# Ignore Label Studio runtime and user data
+.cache/
+.sessions/
+media/
+export/
+logs/
+static/
+db.sqlite3
+.env

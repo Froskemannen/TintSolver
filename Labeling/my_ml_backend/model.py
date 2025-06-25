@@ -10,12 +10,15 @@ from PIL import Image
 import os
 from skimage import measure
 
-# TODO: Ensure that the predict method returns results with 'from_name' matching the active BrushLabels name
-# (e.g., 'target_butterfly', 'target_frog', or 'target_flower') and 'to_name' set to 'image',
-# and outputs a mask in the format required by BrushLabels (base64-encoded PNG or RLE),
-# to be compatible with the current Label Studio XML config (now using BrushLabels/masks, not polygons).
+# TODO: #3 Integrate both Grounding DINO (for semantic labels and bounding boxes) and SAM (for mask generation) in this backend.
+# The predict method should:
+#   1. Use DINO to detect objects and assign semantic labels and bounding boxes.
+#   2. Use SAM to generate masks for each bounding box.
+#   3. Return results with 'from_name' matching the active BrushLabels name in the Label Studio config,
+#      and output masks in the format required by BrushLabels (base64-encoded PNG or RLE),
+#      so that Label Studio can display both the mask and the correct semantic label automatically.
 # See Labeling/my_ml_backend/label_studio_config.xml for the current labeling configuration.
-# Reference: Issue #3 (foundation model integration, mask output)
+# Reference: Issue #3 (foundation model integration, mask output), Issue #8/#9 (active learning, uncertainty scoring)
 
 class NewModel(LabelStudioMLBase):
     """Custom ML Backend model with foundation model integration (SAM)"""

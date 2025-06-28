@@ -1,4 +1,4 @@
-# TintSolver
+# TintVision
 
 A workspace for image labeling, segmentation, and ML backend development using [Label Studio](https://labelstud.io/) and custom machine learning integrations.
 
@@ -18,22 +18,22 @@ A workspace for image labeling, segmentation, and ML backend development using [
    ./scripts/run_label_studio.sh
    ```
 
-   - This will start Label Studio at [http://localhost:8080](http://localhost:8080)
-   - All data is persisted in the `mydata/` directory.
+   * This will start Label Studio at [http://localhost:8080](http://localhost:8080)
+   * All data is persisted in the `mydata/` directory.
 
 ## Project Structure
 
-- `scripts/` — Utility scripts for launching Label Studio and project setup
-- `mydata/` — Persistent data for Label Studio (auto-created)
-- `Labeling/` — ML backend and labeling tools
-- `datasets/` — Labeled and raw data
-- `docs/` — Documentation and workflow guides
+* `scripts/` — Utility scripts for launching Label Studio and project setup
+* `mydata/` — Persistent data for Label Studio (auto-created)
+* `Labeling/` — ML backend and labeling tools
+* `datasets/` — Labeled and raw data
+* `docs/` — Documentation and workflow guides
 
 ## Development
 
-- ML backend code and integration scripts are in `Labeling/my_ml_backend/`.
-- See `Labeling/my_ml_backend/README.md` for backend-specific setup and usage.
-- Use Docker for reproducible environments and easy deployment.
+* ML backend code and integration scripts are in `Labeling/my_ml_backend/`.
+* See `Labeling/my_ml_backend/README.md` for backend-specific setup and usage.
+* Use Docker for reproducible environments and easy deployment.
 
 ## Contributing
 

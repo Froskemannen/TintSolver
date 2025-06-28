@@ -19,3 +19,12 @@ issue-*-*.md
 Labeling/my_ml_backend/models/sam_vit_h_4b8939.pth
 # Ignore all SQLite database files
 *.sqlite3
+
+# Additional ignores for generated/cache/data folders
+.pytest_cache/
+cache.db
+cache_dir/
+Labeling/Cropped/
+Labeling/Screenshots/
+datasets/labeled_data/export.json
+mydata/

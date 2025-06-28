@@ -29,8 +29,8 @@ def main():
         logging.basicConfig(level=logging.DEBUG)
     else:
         logging.basicConfig(level=logging.WARNING)  # Reduce log verbosity
-    screenshots_dir = 'Labeling/Screenshots'
-    cropped_dir = 'Labeling/Cropped'
+    screenshots_dir = '../Labeling/Screenshots'
+    cropped_dir = '../Labeling/Cropped'
     crop_boxes = []
     for filename in os.listdir(screenshots_dir):
         if filename.lower().endswith('.png'):
@@ -57,3 +57,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+

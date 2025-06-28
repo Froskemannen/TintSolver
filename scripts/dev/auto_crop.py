@@ -58,3 +58,7 @@ if __name__ == "__main__":
     # Ensure the output directory exists
     if not os.path.exists(SOURCE_DIR):
         logging.error(f"Source directory '{SOURCE_DIR}' does not exist.")
+        sys.exit(1)
+     os.makedirs(OUTPUT_DIR, exist_ok=True)
+
+     main()

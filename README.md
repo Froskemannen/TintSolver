@@ -6,17 +6,15 @@ A workspace for image labeling, segmentation, and ML backend development using [
 
 1. **Run the setup script (first time only):**
 
-   ```sh
-   bash scripts/setup.sh
-   ```
+   <!-- Reference removed: scripts/setup.sh no longer exists -->
+   <!-- bash scripts/setup.sh -->
 
    This makes all project scripts executable.
 
 2. **Launch Label Studio:**
 
-   ```sh
-   ./scripts/run_label_studio.sh
-   ```
+   <!-- Reference removed: scripts/run_label_studio.sh no longer exists -->
+   <!-- ./scripts/run_label_studio.sh -->
 
    * This will start Label Studio at [http://localhost:8080](http://localhost:8080)
    * All data is persisted in the `mydata/` directory.

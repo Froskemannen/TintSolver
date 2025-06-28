@@ -8,8 +8,8 @@ from PIL import Image
 STANDARD_CROP_BOX = (593, 77, 2205, 1209)
 
 parser = argparse.ArgumentParser(description="Crop images in a directory.")
-parser.add_argument("--source_dir", type=str, default="Labeling/Screenshots", help="Directory containing source images")
-parser.add_argument("--output_dir", type=str, default="Labeling/Cropped", help="Directory to save cropped images")
+parser.add_argument("--source_dir", type=str, default="../../../Labeling/Screenshots", help="Directory containing source images")
+parser.add_argument("--output_dir", type=str, default="../../../Labeling/Cropped", help="Directory to save cropped images")
 parser.add_argument("--crop_box", type=int, nargs=4, default=STANDARD_CROP_BOX, help="Crop box coordinates (left, upper, right, lower)")
 
 SOURCE_DIR = ""
@@ -59,6 +59,6 @@ if __name__ == "__main__":
     if not os.path.exists(SOURCE_DIR):
         logging.error(f"Source directory '{SOURCE_DIR}' does not exist.")
         sys.exit(1)
-    os.makedirs(OUTPUT_DIR, exist_ok=True)
+     os.makedirs(OUTPUT_DIR, exist_ok=True)
 
-    main()
+     main()

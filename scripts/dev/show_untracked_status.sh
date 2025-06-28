@@ -6,19 +6,7 @@ if [ -n "$untracked_files" ]; then
   echo "$untracked_files" | xargs -r git add --intent-to-add
 fi
 
-# Helper: map short status to full name
-status_name() {
-  case "$1" in
-    A) echo "Added";;
-    M) echo "Modified";;
-    D) echo "Deleted";;
-    R*) echo "Renamed";;
-    C*) echo "Copied";;
-    U) echo "Unmerged";;
-    T) echo "Type Changed";;
-    *) echo "$1";;
-  esac
-}
+# (status_name Bash function removed; logic is handled in AWK below)
 
 # Get staged and unstaged changes
 staged=$(git diff --cached --name-status develop)
